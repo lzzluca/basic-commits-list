@@ -1,0 +1,38 @@
+
+.movies-list-wrapper {
+    margin-top: 1rem;
+}
+
+.movies-list-separator {
+    border: 1px solid #dddddd;
+    margin: 2rem 0;
+    width: 100%;
+}
+
+.movie-details {
+    display: inline-block;
+    vertical-align: top;
+    width: 50%;
+}
+
+.movie-picture {
+    display: inline-block;
+    text-align: right;
+    width: 50%;
+}
+
+.movie-picture img {
+    width: 100%;
+}
+
+.movie-review {
+    margin: 1rem 0;
+}
+
+/* line-climp is in Editor's draft but looks to have a good support, see https://caniuse.com/?search=line-clamp */
+.movie-review-truncated {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+}

@@ -1,0 +1,13 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+    /* default value is 16px: this rule is just to make a rem value explicit, set to 16px */
+    font-size: 16px;
+}
+
+h1, h2, h3 {
+  margin: 0;
+}
