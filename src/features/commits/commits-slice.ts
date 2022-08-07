@@ -1,6 +1,6 @@
 import { createSlice, ActionReducerMapBuilder } from '@reduxjs/toolkit'
 import { RootState } from '../../app/store';
-import { fetchCommits } from './commits-thunk';
+import { fetchPage, fetchTotalCount } from './commits-thunk';
 
 export interface Author {
   date: Date;
@@ -29,13 +29,17 @@ export interface CommitsState {
   ids: Array<CommitWrapper['sha']>;
   entities:  { [sha: CommitWrapper['sha']]: CommitWrapper; };
   isLoading: boolean;
+  counterFetched: number;
+  counterTotalCommitsOnRepo: number;
 }
 
 // typed initial state
 const initialState: CommitsState = {
   ids: [],
   entities: {},
-  isLoading: false
+  isLoading: false,
+  counterFetched: -1,
+  counterTotalCommitsOnRepo: -1
 };
 
 export const commitsSlice = createSlice({
@@ -43,11 +47,11 @@ export const commitsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder: ActionReducerMapBuilder<CommitsState>) => {
-      builder.addCase(fetchCommits.pending, (state: CommitsState) => {
+      builder.addCase(fetchPage.pending, (state: CommitsState) => {
           state.isLoading = true;
       });
 
-      builder.addCase(fetchCommits.fulfilled, (state: CommitsState, { payload } : { payload: Array<CommitWrapper> | null }) => {
+      builder.addCase(fetchPage.fulfilled, (state: CommitsState, { payload } : { payload: Array<CommitWrapper> | null }) => {
         const nextEntities: CommitsState['entities'] = {};
         const nextIds: CommitsState['ids'] = [];
 
@@ -62,7 +66,23 @@ export const commitsSlice = createSlice({
       });
 
       // todo: missing error handling for the component render!!! as it is, it will display an endless loading
-      builder.addCase(fetchCommits.rejected, (state: CommitsState) => {
+      builder.addCase(fetchPage.rejected, (state: CommitsState) => {
+        state.isLoading = false;
+      });
+
+
+
+
+      builder.addCase(fetchTotalCount.pending, (state: CommitsState) => {
+        state.isLoading = true;
+      });
+
+      builder.addCase(fetchTotalCount.fulfilled, (state: CommitsState, { payload } : { payload: number | null }) => {
+        state.counterTotalCommitsOnRepo = Number(payload);
+      });
+
+      // todo: missing error handling for the component render!!! as it is, it will display an endless loading
+      builder.addCase(fetchTotalCount.rejected, (state: CommitsState) => {
         state.isLoading = false;
       });
   }

@@ -4,15 +4,16 @@ import { debounce } from "debounce";
 import { useAppDispatch } from './app/hooks';
 import store from "./app/store";
 import CommitsListContainer from "./features/commits/commits-list-container";
-import { fetchCommits } from './features/commits/commits-thunk';
+import { fetchPage, fetchTotalCount } from './features/commits/commits-thunk';
 import "./App.css";
 
 const App = () => {
   const dispatch = useAppDispatch();
 
-  // triggers the fetch for the commits list
+  // triggers the fetch for the commits list and total
   useEffect(() => {
-    dispatch(fetchCommits());
+    dispatch(fetchPage(1));
+    dispatch(fetchTotalCount());
   }, []);
   
   return (
