@@ -7,3 +7,4 @@ export const TOKEN = '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';
 
 // this is for debug: Vue is a big project with many commits, good to work on fetching commits by pagination
 export const API_URL = '/repos/vuejs/vue/commits';
+export const COMMITS_PER_PAGE = 30;

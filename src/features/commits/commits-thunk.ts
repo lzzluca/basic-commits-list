@@ -5,14 +5,14 @@ import { API_URL, TOKEN } from '../../constants';
 // returns a list of commits for the specified page, for master; there are max 30 commits per page
 export const fetchPage = createAsyncThunk(
   'commits/fetchPage',
-  async (pageNumber: number = 1) => {
-    const response = await new Octokit().request(`GET ${API_URL}?page=${pageNumber}`, {
+  async (pageIndex: number = 1) => {
+    const response = await new Octokit().request(`GET ${API_URL}?page=${pageIndex}`, {
       headers: {
         authorization: TOKEN
       }
     });
 
-    return response.data;
+    return { list: response.data, pageIndex };
   }
 );
 

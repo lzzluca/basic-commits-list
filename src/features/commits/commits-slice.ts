@@ -24,12 +24,17 @@ export interface CommitWrapper {
   sha: string;
 }
 
+interface CommitsList {
+  list: Array<CommitWrapper> | null;
+  pageIndex: number;
+}
+
 // type for the slice state
 export interface CommitsState {
   ids: Array<CommitWrapper['sha']>;
   entities:  { [sha: CommitWrapper['sha']]: CommitWrapper; };
   isLoading: boolean;
-  counterFetched: number;
+  currentPageIndex: number;
   counterTotalCommitsOnRepo: number;
 }
 
@@ -38,7 +43,7 @@ const initialState: CommitsState = {
   ids: [],
   entities: {},
   isLoading: false,
-  counterFetched: -1,
+  currentPageIndex: 1,
   counterTotalCommitsOnRepo: -1
 };
 
@@ -51,11 +56,12 @@ export const commitsSlice = createSlice({
           state.isLoading = true;
       });
 
-      builder.addCase(fetchPage.fulfilled, (state: CommitsState, { payload } : { payload: Array<CommitWrapper> | null }) => {
+      builder.addCase(fetchPage.fulfilled, (state: CommitsState, { payload } : { payload: CommitsList }) => {
         const nextEntities: CommitsState['entities'] = {};
         const nextIds: CommitsState['ids'] = [];
+        const { list, pageIndex } = payload;
 
-        payload?.forEach(commit => {
+        list?.forEach(commit => {
           nextIds.push(commit.sha);
           nextEntities[commit.sha] = commit;
         });
@@ -63,6 +69,7 @@ export const commitsSlice = createSlice({
         state.ids = nextIds;
         state.entities = nextEntities;
         state.isLoading = false;
+        state.currentPageIndex = pageIndex;
       });
 
       // todo: missing error handling for the component render!!! as it is, it will display an endless loading

@@ -1,0 +1,14 @@
+.page {
+    display: inline-block;
+    padding: .5rem;
+    width: 1.5rem;
+}
+
+.clickable {
+    cursor: pointer;
+    user-select: none;
+}
+
+.selected {
+    font-weight: bold;
+}
