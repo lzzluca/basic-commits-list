@@ -1,0 +1,16 @@
+.loading-overlay {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #dddddd;
+  opacity: .5;
+}
+
+.loading-text {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  z-index: 1;
+  font-size: 2rem;
+  color: black;
+}
