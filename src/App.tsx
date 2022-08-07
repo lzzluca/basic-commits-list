@@ -19,8 +19,8 @@ const App = () => {
       <Router>
           <div className="content-wrapper">
             <Routes>
-              <Route path="/commits" element={<CommitsListContainer />} />
-              <Route path="*" element={<Navigate to="/commits" replace />} />
+              <Route path="/" element={<CommitsListContainer />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </div>
       </Router>
