@@ -19,7 +19,7 @@ const CommitsListContainer = () => {
         {isLoading ? <LoadingOverlay /> : null}
         {allCommits.length === 0 ? <p>No commits added yet</p> : null}
         {allCommits.length > 0 ? <CommitsList commits={allCommits} /> : null}
-        {counterTotalCommitsOnRepo > -1 ? <Pagination pages={pages} currentPage={currentPageIndex} /> : null}
+        {pages > 1 ? <Pagination pages={pages} currentPage={currentPageIndex} /> : null}
       </div>
   );
 }
