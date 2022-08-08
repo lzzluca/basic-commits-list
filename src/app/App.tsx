@@ -1,9 +1,8 @@
 import React, {useEffect}  from "react";
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
-import { useAppDispatch } from './app/hooks';
-import CommitsListContainer from "./features/commits/commits-list-container";
-import { fetchPage, fetchTotalCount } from './features/commits/commits-thunk';
-import "./App.css";
+import { useAppDispatch } from './hooks';
+import CommitsListContainer from "../features/commits/commits-list-container";
+import { fetchPage, fetchTotalCount } from '../features/commits/commits-thunk';
 
 const App = () => {
   const dispatch = useAppDispatch();

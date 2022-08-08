@@ -4,13 +4,6 @@
 }
 
 .commit {
+    list-style: none;
     padding: 1rem;
 }
-
-/*
-.commit-message-truncated {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-*/

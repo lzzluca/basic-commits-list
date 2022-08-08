@@ -7,7 +7,7 @@
 }
 
 .loading-text {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 40%;
   z-index: 1;
