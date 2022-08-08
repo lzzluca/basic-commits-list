@@ -1,20 +1,24 @@
 import React from 'react';
-import { Commit, CommitWrapper } from './commits-slice';
+import classnames from 'classnames';
+import { CommitWrapper } from './commits-slice';
 import styles from './commits.module.css';
 
-const CommitsList = ({ commits: commitsWrappers = [] } : { commits: Array<CommitWrapper> }): JSX.Element | null => {
-  console.log('log commits', commitsWrappers);
-  
-  return commitsWrappers.length === 0 ? null : (
+interface CommitProps {
+  author: CommitWrapper['author'];
+  commit: CommitWrapper['commit'];
+  node_id: CommitWrapper['node_id'];
+}
+
+const CommitsList = ({ commits: commitsWrappers = [] } : { commits: Array<CommitWrapper> }): JSX.Element | null => 
+  commitsWrappers.length === 0 ? null : (
     <ul>
-      {commitsWrappers.map(({ commit, sha }: { commit: Commit; sha: CommitWrapper['sha']}) => (
-        <li key={sha}>
+      {commitsWrappers.map(({ author, commit, node_id }: CommitProps) => (
+        <li key={node_id} className={classnames(styles['commit'], styles['commit-message-truncated'])}>
           {commit.message}
-          <div className={styles['commit-list-separator']} />
+          <p>{`${new Date(commit.author.date).toLocaleString()} by ${author.login}`}</p>
         </li>
       ))}
     </ul>
   );
-}
 
 export default CommitsList;

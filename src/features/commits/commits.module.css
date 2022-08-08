@@ -1,11 +1,16 @@
 .commits-list-wrapper {
    position: relative;
+   padding: 1rem;
 }
 
-/* line-climp is in Editor's draft but looks to have a good support, see https://caniuse.com/?search=line-clamp */
-.commits-message-truncated {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;  
-    overflow: hidden;
+.commit {
+    padding: 1rem;
 }
+
+/*
+.commit-message-truncated {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+*/

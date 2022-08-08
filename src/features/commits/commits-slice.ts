@@ -2,26 +2,24 @@ import { createSlice, ActionReducerMapBuilder } from '@reduxjs/toolkit'
 import { RootState } from '../../app/store';
 import { fetchPage, fetchTotalCount } from './commits-thunk';
 
-export interface Author {
+interface CommitAuthor {
   date: Date;
-  // todo: there is a more specific type than string??
-  email: string;
-  // todo: there is a more specific type than string??
-  name: string;
 }
 
-export interface Commit {
-  author: Author;
-  comment_count: number;
-  committer: Author;
+interface Commit {
+  author: CommitAuthor;
   message: string;
 }
 
+interface AuthorCommitWrapper {
+  avatar_url: URL;
+  login: string;
+}
+
 export interface CommitWrapper {
+  author: AuthorCommitWrapper;
   commit: Commit;
-  // node_id: ?;
-  // todo: there is a more specific type than string??
-  sha: string;
+  node_id: string;
 }
 
 interface CommitsList {
@@ -31,8 +29,8 @@ interface CommitsList {
 
 // type for the slice state
 export interface CommitsState {
-  ids: Array<CommitWrapper['sha']>;
-  entities:  { [sha: CommitWrapper['sha']]: CommitWrapper; };
+  ids: Array<CommitWrapper['node_id']>;
+  entities:  { [node_id: CommitWrapper['node_id']]: CommitWrapper; };
   isLoading: boolean;
   currentPageIndex: number;
   counterTotalCommitsOnRepo: number;
@@ -62,8 +60,8 @@ export const commitsSlice = createSlice({
         const { list, pageIndex } = payload;
 
         list?.forEach(commit => {
-          nextIds.push(commit.sha);
-          nextEntities[commit.sha] = commit;
+          nextIds.push(commit.node_id);
+          nextEntities[commit.node_id] = commit;
         });
 
         state.ids = nextIds;
@@ -76,9 +74,6 @@ export const commitsSlice = createSlice({
       builder.addCase(fetchPage.rejected, (state: CommitsState) => {
         state.isLoading = false;
       });
-
-
-
 
       builder.addCase(fetchTotalCount.pending, (state: CommitsState) => {
         state.isLoading = true;

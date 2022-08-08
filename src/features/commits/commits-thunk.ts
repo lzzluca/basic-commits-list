@@ -11,7 +11,7 @@ export const fetchPage = createAsyncThunk(
         authorization: TOKEN
       }
     });
-
+    
     return { list: response.data, pageIndex };
   }
 );
